@@ -16,11 +16,10 @@ SDL_Window* createWindow(SDL_Window *window)
 }
 
 
-void destroyWindow(SDL_Window *window, SDL_Renderer* renderer, SDL_Texture *snake) 
+void destroyWindow(SDL_Window *window, SDL_Renderer* renderer) 
 {
     SDL_DestroyWindow(window);
     SDL_DestroyRenderer(renderer);
-    SDL_DestroyTexture(snake);
     SDL_Quit();
 }
 

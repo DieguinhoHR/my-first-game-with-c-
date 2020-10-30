@@ -20,7 +20,6 @@ int main(int argc, char* args[])
     window = createWindow(window);
     // Criar o renderizador para desenhar coisas na janela
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    SDL_Texture *snakeImage = load("images/snake.bmp", renderer);    
 
     while (running) {
         previous_time = current_time;
@@ -41,7 +40,7 @@ int main(int argc, char* args[])
         // Limpa o fundo da tela
         SDL_RenderClear(renderer);      
     } 
-    destroyWindow(window, renderer, snakeImage);
+    destroyWindow(window, renderer);
 
     return 0;
 }
