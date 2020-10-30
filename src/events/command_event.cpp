@@ -2,7 +2,7 @@
 
 Snake snakeMove(bool &running, Snake &snake)
 {
-    // processar as entradas
+    // process entries
     SDL_Event event;
 
     while(SDL_PollEvent(&event)) {

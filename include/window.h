@@ -3,6 +3,6 @@
 #include <SDL2/SDL.h>
 
 SDL_Window* createWindow(SDL_Window *window);
-void destroyWindow(SDL_Window *window, SDL_Renderer* renderer, SDL_Texture *snake);
+void destroyWindow(SDL_Window *window, SDL_Renderer* renderer);
 
 #endif

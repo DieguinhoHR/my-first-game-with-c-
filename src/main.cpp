@@ -2,6 +2,7 @@
 #include <SDL2/SDL.h>
 #include "../include/window.h"
 #include "../include/image.h"
+
 #include "./structs/snake.cpp"
 #include "events/command_event.cpp"
 
