@@ -1,6 +1,6 @@
 #include <SDL2/SDL.h>
 
-Snake snakeMove(bool &running, Snake &snake)
+Snake snakeMove(bool &running, Snake snake)
 {
     // process entries
     SDL_Event event;
@@ -14,20 +14,28 @@ Snake snakeMove(bool &running, Snake &snake)
                     running = false;
                 break;
                 case SDLK_UP:
-                    snake.vy = -1;
-                    snake.vx = 0;
+                    if (snake.velocity.y != 1) {
+                        snake.velocity.y = -1;
+                        snake.velocity.x = 0;
+                    }
                 break;
                 case SDLK_DOWN:
-                    snake.vy = 1;
-                    snake.vx = 0;
+                    if (snake.velocity.y != -1) {
+                        snake.velocity.y = 1;
+                        snake.velocity.x = 0;
+                    }
                 break;
                 case SDLK_RIGHT:
-                    snake.vy = 0;
-                    snake.vx = 1;
+                    if (snake.velocity.x != -1) {
+                        snake.velocity.y = 0;
+                        snake.velocity.x = 1;
+                    }
                 break;   
                 case SDLK_LEFT:
-                    snake.vy = 0;
-                    snake.vx = -1;
+                    if (snake.velocity.x != 1) {
+                        snake.velocity.y = 0;
+                        snake.velocity.x = -1;
+                    }
                 break;   
             }
         }

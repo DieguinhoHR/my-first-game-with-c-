@@ -31,15 +31,13 @@ int main(int argc, char* args[])
       
         snake.update(delta_time, food);
 
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
 
         snake.draw(renderer);
         food.draw(renderer);
 
         SDL_RenderPresent(renderer);
-        // Limpa o fundo da tela
-        SDL_RenderClear(renderer);      
     } 
     destroyWindow(window, renderer);
 
