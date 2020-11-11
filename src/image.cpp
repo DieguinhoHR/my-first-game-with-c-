@@ -1,12 +1,13 @@
 #include <iostream>
-#include "../include/window.h"
+#include "../headers/Window.h"
 #include <SDL2/SDL.h>
 
-SDL_Texture* load(const char *image, SDL_Renderer *renderer)
+SDL_Texture* load(const char *path, SDL_Renderer *renderer)
 {
-    SDL_Surface *surface = SDL_LoadBMP(image);
-    SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_FreeSurface(surface);
-
-    return texture;
+    SDL_Surface *surface = SDL_LoadBMP(path); // retorna um surface
+    if (!surface) {
+        std::cout << "Erro carregando " << path << std::endl;
+        return nullptr;
+    }
+    return SDL_CreateTextureFromSurface(renderer, surface);
 }
