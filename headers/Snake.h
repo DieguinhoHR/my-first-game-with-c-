@@ -19,7 +19,7 @@ class Snake {
 
         void emitSoundWav(const char* file);
         void update(uint32_t delta_time, Food &food, bool &running, Snake* snake);
-        void draw(SDL_Renderer* renderer, Snake *snake);
+        void draw(SDL_Renderer* renderer, Snake* snake);
 };
 
 #endif

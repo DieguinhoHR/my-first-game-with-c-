@@ -26,9 +26,9 @@ void Game::execGame()
     window = windowObject->createWindow(window);
     //Criar o renderizador para desenhar coisas na janela
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-
+    
     food->move();
-    snake->emitSoundWav("../sounds/music_game.wav");
+    snake->emitSoundWav("./sounds/music_game.wav");
     
     while (running) {
         previous_time = current_time;
@@ -38,47 +38,8 @@ void Game::execGame()
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
-
-        // process entries
-        SDL_Event event;
-
-        while(SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                running = false;
-            } else if (event.type == SDL_KEYDOWN) {
-                switch (event.key.keysym.sym) {
-                    case SDLK_ESCAPE:
-                        running = false;
-                    break;
-                    case SDLK_UP:
-                        if (snake->velocity.y != 1) {
-                            snake->velocity.y = -1;
-                            snake->velocity.x = 0;
-                        }
-                    break;
-                    case SDLK_DOWN:
-                        if (snake->velocity.y != -1) {
-                            snake->velocity.y = 1;
-                            snake->velocity.x = 0;
-                        }
-                    break;
-                    case SDLK_RIGHT:
-                        if (snake->velocity.x != -1) {
-                            snake->velocity.y = 0;
-                            snake->velocity.x = 1;
-                        }
-                    break;   
-                    case SDLK_LEFT:
-                        if (snake->velocity.x != 1) {
-                            snake->velocity.y = 0;
-                            snake->velocity.x = -1;
-                        }
-                    break;   
-                }
-            }
-        }
-
-        //Snake::update(uint32_t delta_time, Food &food, bool &running, Snake* snake)
+       
+        commandEvent->snakeMove(running, *snake);
         snake->update(delta_time, *food, running, snake);
         snake->draw(renderer, snake);
         food->draw(renderer);
