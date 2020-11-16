@@ -1,8 +1,6 @@
-#include <iostream>
-#include <SDL2/SDL.h>
+#include "../includes.h"
 
 #include "../headers/Window.h"
-//#include "../headers/image.h"
 #include "../headers/CommandEvent.h"
 #include "../headers/Food.h"
 
@@ -10,7 +8,7 @@
 #include "../headers/Game.h"
 
 using namespace std;
-       
+
 void Game::execGame()
 {
     CommandEvent *commandEvent = new CommandEvent(); 
@@ -26,10 +24,10 @@ void Game::execGame()
     window = windowObject->createWindow(window);
     //Criar o renderizador para desenhar coisas na janela
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    
+
     food->move();
-    snake->emitSoundWav("./sounds/music_game.wav");
-    
+    snake->emitSoundWav("./sounds/music_game.wav");  
+  
     while (running) {
         previous_time = current_time;
         current_time = SDL_GetTicks();
@@ -38,9 +36,11 @@ void Game::execGame()
 
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
         SDL_RenderClear(renderer);
-       
+
+
         commandEvent->snakeMove(running, *snake);
-        snake->update(delta_time, *food, running, snake);
+        snake->update(delta_time, *food, running, renderer);
+        
         snake->draw(renderer, snake);
         food->draw(renderer);
 

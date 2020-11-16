@@ -1,4 +1,4 @@
-#include <iostream>
+#include "../includes.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
 
@@ -25,46 +25,40 @@ void Snake::emitSoundWav(const char* file)
     SDL_QueueAudio(audio, buf, len);
     SDL_FreeWAV(buf);
     SDL_PauseAudioDevice(audio, false);
-
-    // if (isDelay) {
-    //     while (SDL_GetQueuedAudioSize(audio) > 0) {
-    //         SDL_Delay(100);
-    //     }
-    // }
 }
 
-void Snake::update(uint32_t delta_time, Food &food, bool &running, Snake* snake)
+void Snake::update(uint32_t delta_time, Food &food, bool &running, SDL_Renderer* renderer)
 {
-    snake->accumulator += delta_time;
+    this->accumulator += delta_time;
     // atualiza velocidade do jogo
-    if (snake->accumulator > (90 - (snake->tail_length / 2))) { 
-        snake->accumulator = 0;
+    if (this->accumulator > (90 - (this->tail_length / 2))) { 
+        this->accumulator = 0;
 
-        snake->tail[snake->tail_end % snake->tail_max] = snake->position;
+        this->tail[this->tail_end % this->tail_max] = this->position;
 
-        snake->tail_start++;
-        snake->tail_end++;         
+        this->tail_start++;
+        this->tail_end++;         
 
-        snake->position.x += snake->velocity.x;
-        snake->position.y += snake->velocity.y;
+        this->position.x += this->velocity.x;
+        this->position.y += this->velocity.y;
         // verifica se bater nas bordas, finaliza o jogo
-        if (snake->position.x < 0 || snake->position.y < 0 || snake->position.x >= 37 || snake->position.y >= 37) {
-            snake->emitSoundWav("./sounds/game-over.wav");
+        if (this->position.x < 0 || this->position.y < 0 || this->position.x >= 50 || this->position.y >= 50) {
+            this->emitSoundWav("./sounds/game-over.wav");
             running = false;
         }
         // movimenta a fruta na tela
-        if (snake->position.x == food.x && snake->position.y == food.y) {
-            snake->tail_length += 1;
-            snake->tail_start -= 1;
-            snake->emitSoundWav("./sounds/eat-fruit.wav");
-            food.move();
+        if (this->position.x == food.x && this->position.y == food.y) {
+            this->tail_length += 1;
+            this->tail_start -= 1;
+            this->emitSoundWav("./sounds/eat-fruit.wav");
+            food.move();        
         }
 
-        for (int i = 0; i < snake->tail_length; i++) {
-            Dimension& tail_pos = snake->tail[(snake->tail_start + i) % snake->tail_max];
-            if (tail_pos.x == snake->position.x && tail_pos.y == snake->position.y) {
-                snake->tail_length = 0;
-                snake->tail_start = snake->tail_end;
+        for (int i = 0; i < this->tail_length; i++) {
+            Dimension& tail_pos = this->tail[(this->tail_start + i) % this->tail_max];
+            if (tail_pos.x == this->position.x && tail_pos.y == this->position.y) {
+                this->tail_length = 0;
+                this->tail_start = this->tail_end;
 
                 if (tail_pos.x > 0) {           
                     running = false;
@@ -72,6 +66,14 @@ void Snake::update(uint32_t delta_time, Food &food, bool &running, Snake* snake)
             }
         }
     }
+}
+
+bool Snake::isPositionValid(Snake &snake, Food &food)
+{
+    if (this->tail_length > 0) {
+       return true;
+    }
+    return false;
 }
 
 void Snake::draw(SDL_Renderer* renderer, Snake* snake)

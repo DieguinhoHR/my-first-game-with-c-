@@ -18,8 +18,9 @@ class Snake {
         uint32_t accumulator;
 
         void emitSoundWav(const char* file);
-        void update(uint32_t delta_time, Food &food, bool &running, Snake* snake);
+        void update(uint32_t delta_time, Food &food, bool &running, SDL_Renderer* renderer);
         void draw(SDL_Renderer* renderer, Snake* snake);
+        bool isPositionValid(Snake &snake, Food &food);
 };
 
 #endif
